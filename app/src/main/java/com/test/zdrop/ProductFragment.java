@@ -21,10 +21,11 @@ public class ProductFragment extends Fragment {
 
 
     LinearLayout linearLayout;
-    ImageView itemImage, cartIV;
+    ImageView productImg, cartIV;
     Button cartBtn;
     static int cart_count = 0;
     Context context;
+    Fragment fragment;
 
 
     public ProductFragment() {
@@ -46,6 +47,7 @@ public class ProductFragment extends Fragment {
         linearLayout=view.findViewById(R.id.imgLayout);
         cartBtn=view.findViewById(R.id.btnCart);
         cartIV=view.findViewById(R.id.cartIV);
+        productImg=view.findViewById(R.id.productIV);
 
         LayoutInflater itemInflater= LayoutInflater.from(context);
 
@@ -69,6 +71,14 @@ public class ProductFragment extends Fragment {
             public void onClick(View view) {
                 cart_count++;
                 cartIV.setImageDrawable(CartConverter.convertLayoutToImage(context, cart_count, R.drawable.cart));
+            }
+        });
+
+        productImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fragment=new ProductOptionFragment1();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("main").commit();
             }
         });
     }
