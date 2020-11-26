@@ -50,11 +50,11 @@ public class ProductOptionFragment2 extends Fragment {
         linearLayout=view.findViewById(R.id.imgLayout);
         incBtn=view.findViewById(R.id.incrementBtn);
         decBtn=view.findViewById(R.id.decrementBtn);
-        btnNxt=view.findViewById(R.id.btnPrev);
+//        btnNxt=view.findViewById(R.id.btnPrev);
         itemCounter=view.findViewById(R.id.quantity_counterTV);
         productImg.setClipToOutline(true);
 
-        itemCounter.setText(String.valueOf(counter));
+//        itemCounter.setText(String.valueOf(counter));
 
         LayoutInflater itemInflater= LayoutInflater.from(context);
 
@@ -74,43 +74,43 @@ public class ProductOptionFragment2 extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((BackBtnPress) context).onNavBackBtnPress(ProductOptionFragment2.this);
-            }
-        });
-
-        incBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                counter++;
-                itemCounter.setText(String.valueOf(counter));
-            }
-        });
-
-        decBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (counter >= 1){
-                    counter--;
-                    itemCounter.setText(String.valueOf(counter));
-                }
-            }
-        });
-
-        btnNxt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragment=new ProductOptionFragment1();
-                getFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations( R.anim.enter_left_to_right,R.anim.exit_left_to_right,
-                                R.anim.enter_right_to_left,R.anim.exit_right_to_left)
-                        .replace(R.id.fragment_container, fragment)
-                        .commit();
-            }
-        });
+//        closeBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ((BackBtnPress) context).onNavBackBtnPress();
+//            }
+//        });
+//
+//        incBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                counter++;
+//                itemCounter.setText(String.valueOf(counter));
+//            }
+//        });
+//
+//        decBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (counter >= 1){
+//                    counter--;
+//                    itemCounter.setText(String.valueOf(counter));
+//                }
+//            }
+//        });
+//
+//        btnNxt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                fragment=new ProductOptionFragment1();
+//                getFragmentManager()
+//                        .beginTransaction()
+//                        .setCustomAnimations( R.anim.enter_left_to_right,R.anim.exit_left_to_right,
+//                                R.anim.enter_right_to_left,R.anim.exit_right_to_left)
+//                        .replace(R.id.fragment_container, fragment)
+//                        .commit();
+//            }
+//        });
     }
 
     @Override

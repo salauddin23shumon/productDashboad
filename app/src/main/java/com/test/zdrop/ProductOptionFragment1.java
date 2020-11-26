@@ -79,7 +79,7 @@ public class ProductOptionFragment1 extends Fragment {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((BackBtnPress) context).onNavBackBtnPress(ProductOptionFragment1.this);
+                ((BackBtnPress) context).onNavBackBtnPress();
             }
         });
 

@@ -44,19 +44,15 @@ public class MainActivity extends AppCompatActivity implements ProductFragment.O
     }
 
     @Override
-    public void onNavBackBtnPress(Fragment fragment) {
+    public void onNavBackBtnPress() {
 
         int count = getSupportFragmentManager().getBackStackEntryCount();
         Log.d("", "onNavBackBtnPress: " + count);
         if (count == 0) {
             super.onBackPressed();
-        }else if (fragment instanceof ProductOptionFragment2){
-            Log.d(TAG, "elseif: ");
+        } else {
             getSupportFragmentManager().popBackStack();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProductFragment()).commit();
-        }
-        else {
-            onBackPressed();
             Log.d(TAG, "else: ");
         }
 
