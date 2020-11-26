@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.test.zdrop.utility.BackBtnPress;
 
 
 public class ProductOptionFragment1 extends Fragment {
@@ -27,6 +30,7 @@ public class ProductOptionFragment1 extends Fragment {
     Fragment fragment;
     static int counter = 0;
     private Context context;
+
 
     public ProductOptionFragment1() {
         // Required empty public constructor
@@ -75,21 +79,7 @@ public class ProductOptionFragment1 extends Fragment {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getFragmentManager().popBackStack();
-//                FragmentManager fm = getFragmentManager();
-////                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-////                    fm.popBackStack();
-////                }
-//                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//                FragmentManager fm = getFragmentManager(); // or 'getSupportFragmentManager();'
-//                int count = fm.getBackStackEntryCount();
-//                for(int i = 0; i < count; ++i) {
-//                    fm.popBackStack();
-//                }
-
-                String name = getFragmentManager().getBackStackEntryAt(0).getName();
-                Log.e("", "onClick: "+name );
-                getFragmentManager().popBackStack(name, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                ((BackBtnPress) context).onNavBackBtnPress(ProductOptionFragment1.this);
             }
         });
 
@@ -123,6 +113,26 @@ public class ProductOptionFragment1 extends Fragment {
                         .commit();
             }
         });
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    Log.d(TAG, "onKey: back btn pressed");
+                        getActivity().onBackPressed();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+
 }

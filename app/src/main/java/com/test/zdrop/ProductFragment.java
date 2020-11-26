@@ -5,14 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.test.zdrop.utility.CartConverter;
 
@@ -25,7 +30,8 @@ public class ProductFragment extends Fragment {
     Button cartBtn;
     static int cart_count = 0;
     Context context;
-    Fragment fragment;
+    TextView menuTv;
+    OpenProductOption productOption;
 
 
     public ProductFragment() {
@@ -36,6 +42,7 @@ public class ProductFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context=context;
+        productOption= (OpenProductOption) context;
     }
 
     @Override
@@ -48,6 +55,7 @@ public class ProductFragment extends Fragment {
         cartBtn=view.findViewById(R.id.btnCart);
         cartIV=view.findViewById(R.id.cartIV);
         productImg=view.findViewById(R.id.productIV);
+        menuTv=view.findViewById(R.id.menuTV);
 
         LayoutInflater itemInflater= LayoutInflater.from(context);
 
@@ -77,9 +85,33 @@ public class ProductFragment extends Fragment {
         productImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragment=new ProductOptionFragment1();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack("main").commit();
+                productOption.onOptionClicked();
             }
         });
+
+        menuTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popup = new PopupMenu(context, menuTv);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.option_menu, popup.getMenu());
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                    if (item.getItemId()==R.id.productOp){
+                        productOption.onOptionClicked();
+                    }
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        });
+    }
+
+
+    public interface OpenProductOption{
+        void onOptionClicked();
     }
 }

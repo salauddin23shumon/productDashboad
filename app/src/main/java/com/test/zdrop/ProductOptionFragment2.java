@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.test.zdrop.utility.BackBtnPress;
 
 
 public class ProductOptionFragment2 extends Fragment {
@@ -58,7 +61,7 @@ public class ProductOptionFragment2 extends Fragment {
         for (int i=0; i<12; i++){
             View horizontalItemView= itemInflater.inflate(R.layout.horizontal_item,linearLayout,false);
             ImageView itemImage = horizontalItemView.findViewById(R.id.hr_item_iv);
-            itemImage.setImageResource(R.drawable.baggy);
+            itemImage.setImageResource(R.drawable.jacket_small);
 
             linearLayout.addView(horizontalItemView);
         }
@@ -74,12 +77,7 @@ public class ProductOptionFragment2 extends Fragment {
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentManager fm = getActivity().getSupportFragmentManager();
-//                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-//                    fm.popBackStack();
-//                }
-
-                getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                ((BackBtnPress) context).onNavBackBtnPress(ProductOptionFragment2.this);
             }
         });
 
@@ -113,6 +111,26 @@ public class ProductOptionFragment2 extends Fragment {
                         .commit();
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    Log.d(TAG, "onKey: back btn pressed");
+                    getFragmentManager().popBackStack();
+                    getFragmentManager()
+                            .beginTransaction().replace(R.id.fragment_container, new ProductFragment()).commit();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }
